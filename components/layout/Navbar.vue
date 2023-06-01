@@ -17,9 +17,19 @@ const isNavFullScreen = ref(false);
         <div class="navbar__inner-links" :class="{ active: isNavFullScreen }">
             <i class="fas fa-times" @click="isNavFullScreen = !isNavFullScreen"></i>
             <ul class="nav-list" @click="isNavFullScreen = !isNavFullScreen">
-                <li>
+                <li v-if="isUserLoggedIn">
                     <NuxtLink class="nav-list__item" to="/pokedex">
-                        Pokedex
+                        POKEDEX
+                    </NuxtLink>
+                </li>
+                <li v-if="!isUserLoggedIn">
+                    <NuxtLink class="auth-link-login" to="/auth/login">
+                        LOGIN
+                    </NuxtLink>
+                </li>
+                <li v-if="!isUserLoggedIn">
+                    <NuxtLink class="auth-link-register" to="/auth/register">
+                        REGISTER
                     </NuxtLink>
                 </li>
             </ul>
@@ -28,7 +38,13 @@ const isNavFullScreen = ref(false);
 </template>
 
 <script>
-export default {}
+export default {
+    data () {
+        return {
+            isUserLoggedIn: false
+        }
+    }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -37,7 +53,7 @@ export default {}
     align-items: center;
     justify-content: space-between;
     padding: 10px;
-    background-color: beige;
+    background-color: $primary-color;
 
     &__inner-links {
         display: flex;
@@ -57,13 +73,48 @@ export default {}
     &__item {
         text-decoration: none;
         color: black;
-        font-size: 25px;
+        font-size: 23px;
         font-weight: 600;
         margin-right: 20px;
-        border-bottom: 2px solid black;
     }
     &__item:hover {
         cursor: pointer;
+        color: $link-hover-color;
+        border-bottom: 2px solid $link-hover-color;
+        transition: 0.15s;
+    }
+}
+
+.auth-link-login {
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+    margin-right: 30px;
+
+    &:hover {
+        color: $link-hover-color;
+        border-bottom: 2px solid $link-hover-color;
+        transition: 0.15s;
+    }
+}
+
+.auth-link-register {
+    cursor: pointer;
+    text-decoration: none;
+    color: $primary-color;
+    background-color: $link-hover-color;
+    border: 2px solid $link-hover-color;
+    border-radius: 15px;
+    padding: 8px;
+    font-size: 20px;
+    margin-right: 30px;
+
+    &:hover {
+        color: $link-hover-color;
+        background-color: $primary-color;
+        border-color: $link-hover-color;
+        transition: 0.2s;
     }
 }
 
@@ -77,8 +128,8 @@ export default {}
 }
 
 .fa-times {
-    top: 34px;
-    right: 32px;
+    top: 30px;
+    right: 30px;
     position: absolute;
     color: black;
     transform: scale(2);
@@ -97,14 +148,14 @@ export default {}
         align-items: center;
         justify-content: center;
         position: fixed;
-        z-index: 3;
-        left: 0;
+        z-index: 5;
+        right: 0;
         top: -100%;
         width: 100%;
         height: 100%;
         overflow: hidden;
-        background-color: beige;
-        transition: all 0.8s;
+        background-color: $primary-color;
+        transition: all 0.6s;
     }
 
     .nav-list {
@@ -114,12 +165,14 @@ export default {}
         flex-direction: column;
         align-items: center;
         justify-content: center;
-    }
 
-    .nav-list a {
-        padding: 1em;
-        text-align: center;
-        width: 100%;
+        & li {
+            margin-top: 50px;
+        }
+
+        & a {
+            font-size: 40px;
+        }
     }
 }
 
