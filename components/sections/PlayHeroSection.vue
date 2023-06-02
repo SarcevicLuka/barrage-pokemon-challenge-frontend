@@ -11,8 +11,8 @@
         <div class="hero-container">
             <img src="../../assets/images/pokemon-guess-hero.webp" alt="Pokemon guessing game hero image" />
             <div class="middle">
-                <NuxtLink v-if="isUserLoggedIn" class="hero-message" to="user/guessing_game"> PLAY </NuxtLink>
-                <NuxtLink v-if="!isUserLoggedIn" class="login-alert" to="auth/login">LOGIN TO PLAY</NuxtLink>
+                <NuxtLink v-if="isUserLoggedIn" class="middle-button" to="user/guessing_game"> PLAY </NuxtLink>
+                <NuxtLink v-if="!isUserLoggedIn" class="middle-button" to="auth/login">LOGIN TO PLAY</NuxtLink>
             </div>
         </div>
     </div>
@@ -22,7 +22,7 @@
 export default {
     data() {
         return {
-            isUserLoggedIn: false
+            isUserLoggedIn: true
         }
     },
 }
@@ -55,12 +55,15 @@ img {
     opacity: 0.6;
 }
 
-.hero-container:hover .middle {
+.hero-container:hover .middle-button {
     opacity: 1;
 }
 
-.middle {
+.middle-button {
     text-align: center;
+    text-decoration: none;
+    color: black;
+    font-size: 25px;
     transition: .5s ease;
     opacity: 0;
     position: absolute;
@@ -76,18 +79,6 @@ img {
         background-color: $secondary-color;
         transition: .5s;
     }
-}
-
-.hero-message {
-    text-decoration: none;
-    color: black;
-    font-size: 25px;
-}
-
-.login-alert {
-    text-decoration: none;
-    color: black;
-    font-size: 20px;
 }
 
 @media (max-width: 821px) {
