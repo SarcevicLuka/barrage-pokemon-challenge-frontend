@@ -4,7 +4,8 @@ import * as mutations from './mutations';
 
 const state = {
     userToken: "",
-    errors: ""
+    errors: "",
+    pending: false
 }
 
 export const store = createStore({

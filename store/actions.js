@@ -1,5 +1,5 @@
 export async function registerUser({ commit }, userData) {
-    return await useFetch('http://localhost:8080/auth/register', {
+    const { pending } = await useFetch('http://localhost:8080/auth/register', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -10,10 +10,10 @@ export async function registerUser({ commit }, userData) {
         }),
         onResponse({ response }) {
             console.log(response)
-            if (response.status === 201)
+            if (response.status === 201){
                 commit('setToken', response.headers.get("authorization"))
-            
-            navigateTo("/")
+                navigateTo("/")
+            }
         },
         onResponseError({ response }) {
             if (response.status !== 422) {
@@ -23,4 +23,5 @@ export async function registerUser({ commit }, userData) {
             }
         }
     })
+    commit('setPending', pending)
 }

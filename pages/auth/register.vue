@@ -11,9 +11,10 @@
             <input v-model="firstName" type="text" id="firstName" placeholder="Enter first name" required>
             <input v-model="lastName" type="text" id="lastName" placeholder="Enter last name" required>
             <input v-model="password" type="password" id="password" placeholder="Enter password" required>
-            <button class="submit" @click.prevent="handleRegister">
+            <button class="submit" @click.prevent="handleRegister" :disabled="pending">
                 Register
             </button>
+            <div>{{pending}}</div>
         </form>
     </div>
 </template>
@@ -34,11 +35,14 @@ export default {
     computed: {
         errors() {
             return store.state.errors;
+        },
+        pending() {
+            return store.state.pending;
         }
     },
     methods: {
-        handleRegister() {
-            store.dispatch('registerUser', {
+        async handleRegister() {
+            await store.dispatch('registerUser', {
                 email: this.email,
                 firstName: this.firstName,
                 lastName: this.lastName,
