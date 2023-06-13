@@ -1,42 +1,17 @@
 <template>
     <div class="register-container">
-        <form action="register" class="register-form">
+        <form class="register-form">
             <div class="info-container">
                 <p>Create an account</p>
-                <transition name="fade">
-                    <p v-if="error" class="error-message">
-                        {{ error }}
-                    </p>
-                </transition>
+                <p v-if="errors" class="error-message">
+                    {{ errors }}
+                </p>
             </div>
-            <input 
-                v-model="email" 
-                type="email" 
-                name="email" 
-                placeholder="Enter email" 
-                required
-            >
-            <input 
-                v-model="firstName" 
-                type="text" 
-                name="fname" 
-                placeholder="Enter first name" 
-                required
-            >
-            <input 
-                v-model="lastName" 
-                type="text" 
-                name="lname" 
-                placeholder="Enter last name" 
-                required
-            >
-            <input 
-                v-model="password" 
-                type="password" 
-                name="password" 
-                placeholder="Enter password" 
-                required>
-            <button class="submit" @click="register" :disabled=isDone>
+            <input v-model="email" type="email" id="email" placeholder="Enter email" required>
+            <input v-model="firstName" type="text" id="firstName" placeholder="Enter first name" required>
+            <input v-model="lastName" type="text" id="lastName" placeholder="Enter last name" required>
+            <input v-model="password" type="password" id="password" placeholder="Enter password" required>
+            <button class="submit" @click.prevent="handleRegister">
                 Register
             </button>
         </form>
@@ -44,40 +19,35 @@
 </template>
 
 <script>
+import { store } from '../../store/index'
+
+
 export default {
     data() {
         return {
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: '',
-            isDone: false,
-            error: ''
+            email: "",
+            firstName: "",
+            lastName: "",
+            password: "",
+        }
+    },
+    computed: {
+        errors() {
+            return store.state.errors;
         }
     },
     methods: {
-        async register({ store }) {
-            useFetch('http://127.0.0.1:8080/auth/register', {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    email: this.email,
-                    firstName: this.firstName,
-                    lastName: this.lastName,
-                    password: this.password
-                }),
-                onResponse({ response }) {
-                    console.log("Response: ", response)
-                },
-                onResponseError({ response }) {
-                    console.log("Error: " + response)
-                }
-            })        
-            console.log("Response data: " + JSON.stringify(data))
+        handleRegister() {
+            store.dispatch('registerUser', {
+                email: this.email,
+                firstName: this.firstName,
+                lastName: this.lastName,
+                password: this.password
+            })
         }
     }
-
 }
+
 </script>
 
 <style lang="scss" scoped>
@@ -99,7 +69,7 @@ export default {
         padding: 10px;
         background-color: rgb(248, 225, 225);
         border-radius: 5px;
-        position: absolute;
+        position: relative;
         bottom: 0;
         font-size: 14px;
         color: $error;
