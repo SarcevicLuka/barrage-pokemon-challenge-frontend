@@ -1,6 +1,6 @@
-import { userData } from "./types"
+import { UserData } from "./types"
 
-export async function registerUser({ commit }: any, userData: userData) {
+export async function registerUser({ commit }: any, userData: UserData) {
     const { pending } = await useFetch('http://localhost:8080/auth/register', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
