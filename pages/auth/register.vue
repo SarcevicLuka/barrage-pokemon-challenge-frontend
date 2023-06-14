@@ -14,7 +14,6 @@
             <button class="submit" @click.prevent="handleRegister" :disabled="pending">
                 Register
             </button>
-            <div>{{pending}}</div>
         </form>
     </div>
 </template>
