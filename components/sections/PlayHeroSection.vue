@@ -19,10 +19,12 @@
 </template>
 
 <script>
+import { store } from '../../store/index'
+
 export default {
     data() {
         return {
-            isUserLoggedIn: true
+            isUserLoggedIn: store.state.userToken
         }
     },
 }

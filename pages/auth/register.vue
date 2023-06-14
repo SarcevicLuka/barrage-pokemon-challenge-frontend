@@ -21,7 +21,6 @@
 <script>
 import { store } from '../../store/index'
 
-
 export default {
     data() {
         return {
@@ -41,12 +40,15 @@ export default {
     },
     methods: {
         async handleRegister() {
-            await store.dispatch('registerUser', {
-                email: this.email,
-                firstName: this.firstName,
-                lastName: this.lastName,
-                password: this.password
-            })
+            await store.dispatch(
+                'registerUser',
+                {
+                    email: this.email,
+                    firstName: this.firstName,
+                    lastName: this.lastName,
+                    password: this.password
+                }
+            )
         }
     }
 }
