@@ -18,7 +18,7 @@ const isNavFullScreen = ref(false);
             <i class="fas fa-times" @click="isNavFullScreen = !isNavFullScreen"></i>
             <ul class="nav-list" @click="isNavFullScreen = !isNavFullScreen">
                 <li v-if="isUserLoggedIn">
-                    <NuxtLink class="nav-list__item" to="/pokedex">
+                    <NuxtLink class="nav-list-pokedex" to="/pokedex">
                         POKEDEX
                     </NuxtLink>
                 </li>
@@ -38,10 +38,12 @@ const isNavFullScreen = ref(false);
 </template>
 
 <script>
+import { store } from '../../store/index'
+
 export default {
     data () {
         return {
-            isUserLoggedIn: false
+            isUserLoggedIn: store.state.userToken
         }
     }
 }
@@ -69,20 +71,6 @@ export default {
 .nav-list {
     list-style-type: none;
     display: flex;
-
-    &__item {
-        text-decoration: none;
-        color: black;
-        font-size: 23px;
-        font-weight: 600;
-        margin-right: 20px;
-    }
-    &__item:hover {
-        cursor: pointer;
-        color: $link-hover-color;
-        border-bottom: 2px solid $link-hover-color;
-        transition: 0.15s;
-    }
 }
 
 .auth-link-login {
@@ -99,7 +87,7 @@ export default {
     }
 }
 
-.auth-link-register {
+.auth-link-register, .nav-list-pokedex {
     cursor: pointer;
     text-decoration: none;
     color: $primary-color;
