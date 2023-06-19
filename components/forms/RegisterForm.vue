@@ -18,7 +18,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import { store } from '../../store/index'
 
 export default {
@@ -39,7 +39,7 @@ export default {
         }
     },
     methods: {
-        async handleRegister() {
+        async handleRegister(): Promise<void> {
             await store.dispatch(
                 'registerUser',
                 {

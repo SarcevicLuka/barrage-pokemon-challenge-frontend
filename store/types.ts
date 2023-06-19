@@ -9,3 +9,8 @@ export type LoginUserData = {
     email: string,
     password: string
 }
+
+export type GuessingGamePokemon = {
+    image: string,
+    guessId: string
+}

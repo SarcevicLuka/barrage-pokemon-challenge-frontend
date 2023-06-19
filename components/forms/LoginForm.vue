@@ -16,7 +16,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import { store } from '../../store/index'
 
 export default {
@@ -27,15 +27,15 @@ export default {
         }
     },
     computed: {
-        errors() {
+        errors(): string {
             return store.state.errors;
         },
-        pending() {
+        pending(): boolean {
             return store.state.pending;
         }
     },
     methods: {
-        async handleLogin() {
+        async handleLogin(): Promise<void> {
             await store.dispatch(
                 'loginUser',
                 {

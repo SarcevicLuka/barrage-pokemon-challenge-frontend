@@ -5,7 +5,12 @@ import * as mutations from './mutations';
 const state = {
     userToken: "",
     errors: "",
-    pending: false
+    pending: false,
+    guessingGamePokemon: {
+        image: "",
+        guessId: ""
+    },
+    guessVerdict: "",
 }
 
 export const store = createStore({

@@ -1,15 +1,18 @@
 <template>
-    <div>
-        Guessing Game
-    </div>
+    <Navbar />
+    <GuessingGameSection />
 </template>
 
 <script>
-    export default {
-        
+import Navbar from "@/components/layout/Navbar.vue";
+import GuessingGameSection from "@/components/sections/GuessingGameSection.vue";
+
+export default {
+    components: {
+        Navbar,
+        GuessingGameSection
     }
+}
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
