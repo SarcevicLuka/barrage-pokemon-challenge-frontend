@@ -5,56 +5,71 @@
         </div>
         <div class="game-controls">
             <div class="input-skip">
-                <input 
-                    v-model="guess" 
-                    type="text" 
-                    id="guess-input" 
-                    :class="errors && 'incorrect'"
-                    :placeholder="errors ? errors.toString() : 'Take a guess...'" 
-                    required
-                >
+                <transition name="fade">
+                    <div class="verdict">
+                        <div class="verdict__correct" v-if="isCorrect"> {{ verdict }} </div>
+                        <div class="verdict__incorrect" v-else-if="isIncorrect"> {{ verdict }} </div>
+                    </div>
+                </transition>
+                <input v-model="userGuess" type="text" id="guess-input" :class="errors && 'incorrect'"
+                    :placeholder="errors ? errors.toString() : 'Take a guess...'">
                 <button @click="handleSkip">Skip</button>
-                <div v-if="verdict">{{ verdict }}</div>
             </div>
             <button class="submit" @click.prevent="handleGuess">Guess</button>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { store } from '~/store';
+import { GuessingGamePokemon } from '~/store/types';
 
-export default {
-    mounted() {
-        store.dispatch('getRandomPokemon')
-    },
-    data() {
-        return {
-            guess: "",
-            pokemon: store.state.guessingGamePokemon,
-        }
-    },
-    computed: {
-        errors(): string {
-            return store.state.errors;
-        },
-        verdict(): string {
-            return store.state.guessVerdict;
-        }
-    },
-    methods: {
-        async handleSkip(): Promise<void> {
-            await store.dispatch('getRandomPokemon');
-            this.pokemon = store.state.guessingGamePokemon
-        },
-        async handleGuess() {
-            await store.dispatch('takeAGuess', this.guess);
-            console.log(store.state.guessVerdict)
-            if (store.state.guessVerdict === "correct") {
-                await store.dispatch('getRandomPokemon')
-                this.pokemon = store.state.guessingGamePokemon
-            }
-        }
+const verdict = ref("")
+const isCorrect = ref(false)
+const isIncorrect = ref(true)
+const userGuess = ref("")
+const errors = ref("")
+const pokemon = reactive<GuessingGamePokemon>({
+    image: "",
+    guessId: ""
+})
+
+onMounted(() => {
+    handleSkip()
+})
+
+async function handleSkip(): Promise<void> {
+    await store.dispatch('getRandomPokemon')
+        .then(({ error, gamePokemon }) => {
+            errors.value = error
+            pokemon.image = gamePokemon.image
+            pokemon.guessId = gamePokemon.guessId
+        });
+}
+
+async function handleGuess(): Promise<void> {
+    await store.dispatch('takeAGuess', {
+        userGuess: userGuess.value,
+        guessId: pokemon.guessId
+    })
+        .then(({ error, guessVerdict }) => {
+            errors.value = error
+            verdict.value = guessVerdict
+        });
+
+    if (verdict.value === "correct") {
+        userGuess.value = ""
+        nextTick(() => {
+            isCorrect.value = true
+            isIncorrect.value = false
+            setTimeout(() => isCorrect.value = false, 1000)
+        })
+        await handleSkip()
+    }
+    else {
+        userGuess.value = ""
+        isCorrect.value = false
+        isIncorrect.value = true
     }
 }
 </script>
@@ -78,6 +93,20 @@ export default {
 .game-controls {
     margin-top: 50px;
     width: 400px;
+}
+
+.verdict {
+    font-size: 15px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+
+    &__correct {
+        color: green;
+    }
+
+    &__incorrect {
+        color: $important;
+    }
 }
 
 .input-skip {

@@ -3,14 +3,8 @@ import * as actions from './actions';
 import * as mutations from './mutations';
 
 const state = {
-    userToken: "",
-    errors: "",
+    isUserActive: false,
     pending: false,
-    guessingGamePokemon: {
-        image: "",
-        guessId: ""
-    },
-    guessVerdict: "",
 }
 
 export const store = createStore({

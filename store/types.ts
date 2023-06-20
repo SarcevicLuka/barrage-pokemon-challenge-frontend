@@ -10,6 +10,16 @@ export type LoginUserData = {
     password: string
 }
 
+export type AuthHandlerProps = {
+    userData: RegisterUserData | LoginUserData,
+    path: string
+}
+
+export type GuessHandlerProps = {
+    userGuess: string,
+    guessId: string
+}
+
 export type GuessingGamePokemon = {
     image: string,
     guessId: string

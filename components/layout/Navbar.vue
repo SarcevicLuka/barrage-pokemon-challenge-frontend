@@ -43,7 +43,7 @@ import { store } from '../../store/index'
 export default {
     data () {
         return {
-            isUserLoggedIn: store.state.userToken
+            isUserLoggedIn: store.state.isUserActive
         }
     }
 }
