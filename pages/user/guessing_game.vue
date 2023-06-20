@@ -3,16 +3,18 @@
     <GuessingGameSection />
 </template>
 
-<script>
-import Navbar from "@/components/layout/Navbar.vue";
-import GuessingGameSection from "@/components/sections/GuessingGameSection.vue";
+<script setup>
+    import Navbar from "@/components/layout/Navbar.vue";
+    import GuessingGameSection from "@/components/sections/GuessingGameSection.vue";
 
-export default {
-    components: {
+    definePageMeta({
+        middleware: ["auth"]
+    });
+
+    const components = {
         Navbar,
         GuessingGameSection
     }
-}
 </script>
 
 <style lang="scss" scoped></style>
