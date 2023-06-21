@@ -43,5 +43,5 @@
 </script>
 
 <style lang="scss" scoped>
-    @import "@/assets/styles/authForm.scss"
+    @import "../../assets/styles/authForm.scss"
 </style>
