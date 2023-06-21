@@ -1,5 +1,10 @@
 <template>
     <div class="guessing-game">
+        <p>Progression:</p>
+        <div class="bar-flex">
+            {{ pokemonCaught >= 100 ? pokemonCaught : `0${pokemonCaught}` }}
+            <GameProgressBar :max-value="200" :value="pokemonCaught" /> 151
+          </div>
         <div class="game-image">
             <img :src="pokemon.image" alt="Pokemon logo">
         </div>
@@ -13,9 +18,12 @@
                 </transition>
                 <input v-model="userGuess" type="text" id="guess-input" :class="errors && 'incorrect'"
                     :placeholder="errors ? errors.toString() : 'Take a guess...'">
-                <button @click="handleSkip">Skip</button>
+                <button @click="handleSkip">SKIP</button>
             </div>
-            <button class="submit" @click.prevent="handleGuess">Guess</button>
+            <div class="control-buttons">
+                <button class="control-buttons__submit" @click.prevent="handleGuess">GUESS</button>
+                <button class="control-buttons__finish" @click.prevent="handleFinish">FINISH</button>
+            </div>
         </div>
     </div>
 </template>
@@ -23,22 +31,25 @@
 <script lang="ts" setup>
 import { store } from '~/store';
 import { GuessingGamePokemon } from '~/store/types';
+import GameProgressBar from '../GameProgressBar.vue'
 
-const verdict = ref("")
-const isCorrect = ref(false)
-const isIncorrect = ref(true)
 const userGuess = ref("")
-const errors = ref("")
 const pokemon = reactive<GuessingGamePokemon>({
     image: "",
     guessId: ""
 })
+const pokemonCaught = ref(0)
+const verdict = ref("")
+const isCorrect = ref(false)
+const isIncorrect = ref(true)
+const errors = ref("")
 
 onMounted(() => {
     handleSkip()
 })
 
 async function handleSkip(): Promise<void> {
+    verdict.value = ""
     await store.dispatch('getRandomPokemon')
         .then(({ error, gamePokemon }) => {
             errors.value = error
@@ -59,6 +70,7 @@ async function handleGuess(): Promise<void> {
 
     if (verdict.value === "correct") {
         userGuess.value = ""
+        pokemonCaught.value += 1
         nextTick(() => {
             isCorrect.value = true
             isIncorrect.value = false
@@ -72,6 +84,10 @@ async function handleGuess(): Promise<void> {
         isIncorrect.value = true
     }
 }
+
+async function handleFinish() {
+
+}
 </script>
 
 <style lang="scss" scoped>
@@ -80,6 +96,12 @@ async function handleGuess(): Promise<void> {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+}
+
+.bar-flex {
+    width: 500px;
+    display: flex;
     align-items: center;
 }
 
@@ -92,7 +114,7 @@ async function handleGuess(): Promise<void> {
 
 .game-controls {
     margin-top: 50px;
-    width: 400px;
+    width: 500px;
 }
 
 .verdict {
@@ -143,11 +165,39 @@ async function handleGuess(): Promise<void> {
     }
 }
 
+.control-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 40px;
+    margin-top: 10px;
+    
+    &__submit {
+        cursor: pointer;
+        width: 50%;
+        border: none;
+        border-radius: 10px 0 0 10px;
+        background-color: $secondary-color;
+        &:hover {
+            background-color: $primary-color;
+        }
+    }
+    
+    &__finish {
+        cursor: pointer;
+        width: 50%;
+        border: none;
+        border-radius: 0 10px 10px 0;
+        background-color: rgb(222, 111, 111);
+        &:hover {
+            background-color: rgb(235, 155, 155);
+        }
+    }
+}
 .submit {
     cursor: pointer;
     display: block;
     width: 100%;
-    margin-top: 10px;
     background-color: $secondary-color;
     font-size: 15px;
     border: none;
@@ -156,6 +206,26 @@ async function handleGuess(): Promise<void> {
 
     &:hover {
         background-color: $primary-color;
+    }
+}
+
+// Mobile
+@media (max-width: 450px) {
+    .input-skip {
+        &>input {
+            width: 79%;
+        }
+    
+        &>button {
+            width: 15%;
+        }
+    }
+
+    .bar-flex {
+        width: 320px;
+    }
+    .game-controls {
+        width: 320px;
     }
 }
 </style>
