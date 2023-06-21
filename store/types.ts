@@ -24,3 +24,8 @@ export type GuessingGamePokemon = {
     image: string,
     guessId: string
 }
+
+export type ResponseWithPayload = {
+    error: string,
+    payload: GuessingGamePokemon | string
+}

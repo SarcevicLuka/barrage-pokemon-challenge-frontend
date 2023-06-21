@@ -5,6 +5,7 @@ import * as mutations from './mutations';
 const state = {
     isUserActive: false,
     pending: false,
+    guessedPokemon: []
 }
 
 export const store = createStore({

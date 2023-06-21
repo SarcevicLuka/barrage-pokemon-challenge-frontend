@@ -7,3 +7,7 @@ export function setIsUserActive(state: { isUserActive: boolean; }, payload: bool
 export function setPending(state: { pending: boolean; }, payload: boolean) {
     state.pending = payload;
 }
+
+export function setGuessedPokemon(state: { guessedPokemon: GuessingGamePokemon[]; }, payload: GuessingGamePokemon[]) {
+    state.guessedPokemon = payload;
+}
