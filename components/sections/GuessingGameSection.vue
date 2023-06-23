@@ -1,17 +1,27 @@
 <template>
     <div v-if="showModal" class="pokedex-modal">
         <div class="pokedex-modal__inner">
-            <h3>Caught pokemon:</h3>
+            <h3>Pokemon caught in this round: {{ newelyCaughtPokemon.length }}</h3>
             <i class="fas fa-times" @click="showModal = false" />
             <div class="pokedex-grid">
                 <div v-for="guessedPokemon in newelyCaughtPokemon" :key="guessedPokemon.image"
-                    class="pokedex-grid__inner-correct">
-                    <img class="pokemon-image" :src="guessedPokemon.image" alt="Pokemon`">
+                    class="pokedex-grid__inner-caught">
+                    <img class="image" :src="guessedPokemon.image" alt="Pokemon">
+                </div>
+                <div v-for="n in (151 - newelyCaughtPokemon.length)" :key="n" class="pokedex-grid__inner-missing">
+                    <img class="image" src="../../assets/images/questionMark.png" alt="Questionmark image">
                 </div>
             </div>
         </div>
     </div>
-    <div class="guessing-game">
+    <div v-if="showFinishGame" class="finish-message">
+        <div class="message">
+            <h1>You caught {{ newelyCaughtPokemon.length }} new pokemon</h1>
+            <h2 v-if="newelyCaughtPokemon.length === 0"> Don't give up</h2>
+            <button class="message__try-again" @click.prevent="handleTryAgain">Try again</button>
+        </div>
+    </div>
+    <div v-else-if="!showFinishGame" class="guessing-game">
         <p>Progression:</p>
         <div class="bar-flex">
             {{ newelyCaughtPokemon.length >= 100 ? newelyCaughtPokemon.length : newelyCaughtPokemon.length }}
@@ -23,8 +33,8 @@
         <div class="game-controls">
             <div class="input-skip">
                 <div class="verdict">
-                    <div class="verdict__correct" v-if="isCorrect"> {{ verdict }} </div>
-                    <div class="verdict__incorrect" v-else-if="isIncorrect"> {{ verdict }} </div>
+                    <div class="verdict__correct" v-if="isCorrect"> CORRECT </div>
+                    <div class="verdict__incorrect" v-else-if="isIncorrect"> INCORRECT </div>
                 </div>
                 <input v-model="userGuess" type="text" id="guess-input" :class="errors && 'incorrect'"
                     :placeholder="errors ? errors.toString() : 'Take a guess...'">
@@ -33,7 +43,7 @@
             <div class="control-buttons">
                 <button class="control-buttons__submit" @click.prevent="handleGuess">GUESS</button>
                 <button class="control-buttons__finish" @click.prevent="handleFinish">FINISH</button>
-                <button class="control-buttons__pokedex" @click.prevent="handlePokedex">POKEDEX</button>
+                <button class="control-buttons__pokedex" @click.prevent="showModal = true">POKEDEX</button>
             </div>
         </div>
     </div>
@@ -42,7 +52,7 @@
 <script lang="ts" setup>
 import { store } from '~/store';
 import { GuessingGamePokemon } from '~/store/types';
-import GameProgressBar from '../GameProgressBar.vue'
+import GameProgressBar from '../GameProgressBar.vue';
 
 const userGuess = ref("")
 const pokemon = reactive<GuessingGamePokemon>({
@@ -52,7 +62,7 @@ const pokemon = reactive<GuessingGamePokemon>({
 let newelyCaughtPokemon: GuessingGamePokemon[] = []
 const verdict = ref("")
 const isCorrect = ref(false)
-const isIncorrect = ref(true)
+const isIncorrect = ref(false)
 const showFinishGame = ref(false)
 const showModal = ref(false)
 const errors = ref("")
@@ -63,6 +73,7 @@ onMounted(() => {
 
 async function handleSkip(): Promise<void> {
     verdict.value = ""
+
     await store.dispatch('getRandomPokemon')
         .then(({ error, payload }) => {
             errors.value = error
@@ -76,25 +87,27 @@ async function handleGuess(): Promise<void> {
         userGuess: userGuess.value,
         guessId: pokemon.guessId
     })
-        .then(({ error, payload }) => {
-            errors.value = error
-            verdict.value = payload
-        });
+    .then(({ error, payload }) => {
+        errors.value = error
+        verdict.value = payload
+        console.log(verdict.value)
+    });
 
     if (verdict.value === "correct") {
         userGuess.value = ""
+
         const newPokemon = {
             image: pokemon.image,
             guessId: pokemon.guessId
         }
         newelyCaughtPokemon.push(newPokemon)
-        console.log(newelyCaughtPokemon)
-        nextTick(() => {
-            isCorrect.value = true
-            console.log(isCorrect.value)
-            isIncorrect.value = false
-            setTimeout(() => isCorrect.value = false, 1000)
-        })
+
+        isIncorrect.value = false
+        isCorrect.value = true
+        setTimeout(() => {
+            isCorrect.value = false
+        }, 1000)
+
         await handleSkip()
     }
     else {
@@ -104,16 +117,44 @@ async function handleGuess(): Promise<void> {
 }
 
 async function handleFinish() {
-    newelyCaughtPokemon = [];
     showFinishGame.value = true
 }
 
-function handlePokedex() {
-    showModal.value = true
+async function handleTryAgain() {
+    await handleSkip();
+
+    newelyCaughtPokemon = [];
+    showFinishGame.value = false;
+    isCorrect.value = false;
+    isIncorrect.value = false;
 }
 </script>
 
 <style lang="scss" scoped>
+.message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &__try-again {
+        cursor: pointer;
+        text-decoration: none;
+        color: $link-hover-color;
+        background-color: white;
+        border: 2px solid $link-hover-color;
+        border-radius: 15px;
+        padding: 8px;
+        font-size: 20px;
+    
+        &:hover {
+            color: white;
+            background-color: $link-hover-color;
+            transition: 0.2s;
+        }
+    }
+}
+
 .pokedex-modal {
     padding: 0 20px;
     position: fixed;
@@ -122,7 +163,7 @@ function handlePokedex() {
     right: 0;
     bottom: 0;
     z-index: 1010;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: $modal-shadow;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -153,45 +194,50 @@ function handlePokedex() {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr 1fr;
             grid-gap: 20px;
-            max-height: 140px;
+            max-height: 1000px;
             overflow: auto;
+
+            .image {
+                display: block;
+                margin: 0 auto;
+                max-width: 150px;
+            }
 
             @media only screen and (min-width: 350px) {
                 grid-template-columns: 1fr;
                 grid-gap: 30px;
-                max-height: 1000px;
+                max-height: 500px;
             }
 
             @media only screen and (min-width: 550px) {
                 grid-template-columns: 1fr 1fr;
-                max-height: 800px;
+                max-height: 500px;
             }
 
             @media only screen and (min-width: 800px) {
                 grid-template-columns: 1fr 1fr 1fr;
-                max-height: 800px;
+                max-height: 500px;
             }
 
-            &__inner-correct {
+            &__inner-caught {
+                border: 2px solid $secondary-color;
+                border-radius: 10px;
+            }
+
+            &__inner-missing {
                 border: 2px solid black;
                 border-radius: 10px;
-
-                .pokemon-image {
-                    display: block;
-                    margin: 0 auto;
-                    max-width: 150px;
-                }
             }
         }
     }
 }
 
 .guessing-game {
-    height: 89vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: 50px;
 }
 
 .bar-flex {
