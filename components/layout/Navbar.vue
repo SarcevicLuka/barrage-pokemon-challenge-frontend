@@ -1,13 +1,7 @@
-<script setup>
-import { ref } from "vue";
-
-const isNavFullScreen = ref(false);
-</script>
-
 <template>
     <nav class="navbar">
         <div class="navbar__inner-logo">
-            <NuxtLink to="/">
+            <NuxtLink :to="RouteNames.Home">
                 <img src="../../assets/images/pokemon_logo.png" alt="Pokemon logo" class="logo">
             </NuxtLink>
         </div>
@@ -18,17 +12,17 @@ const isNavFullScreen = ref(false);
             <i class="fas fa-times" @click="isNavFullScreen = !isNavFullScreen"></i>
             <ul class="nav-list" @click="isNavFullScreen = !isNavFullScreen">
                 <li v-if="isUserLoggedIn">
-                    <NuxtLink class="nav-list-pokedex" to="/pokedex">
+                    <NuxtLink class="nav-list-pokedex" :to="RouteNames.Pokedex">
                         POKEDEX
                     </NuxtLink>
                 </li>
                 <li v-if="!isUserLoggedIn">
-                    <NuxtLink class="auth-link-login" to="/auth/login">
+                    <NuxtLink class="auth-link-login" :to="RouteNames.Login">
                         LOGIN
                     </NuxtLink>
                 </li>
                 <li v-if="!isUserLoggedIn">
-                    <NuxtLink class="auth-link-register" to="/auth/register">
+                    <NuxtLink class="auth-link-register" :to="RouteNames.Register">
                         REGISTER
                     </NuxtLink>
                 </li>
@@ -38,15 +32,22 @@ const isNavFullScreen = ref(false);
 </template>
 
 <script>
-import { store } from '../../store/index'
+import { store } from "../../store/index";
+import { RouteNames } from "../routeNames";
 
 export default {
-    data () {
+    data() {
         return {
             isUserLoggedIn: store.state.isUserActive
         }
     }
 }
+</script>
+
+<script setup>
+import { ref } from "vue";
+
+const isNavFullScreen = ref(false);
 </script>
 
 <style lang="scss" scoped>
@@ -87,7 +88,8 @@ export default {
     }
 }
 
-.auth-link-register, .nav-list-pokedex {
+.auth-link-register,
+.nav-list-pokedex {
     cursor: pointer;
     text-decoration: none;
     color: $primary-color;

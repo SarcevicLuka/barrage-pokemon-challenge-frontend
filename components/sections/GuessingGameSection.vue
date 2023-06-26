@@ -43,7 +43,7 @@
             <div class="control-buttons">
                 <button class="control-buttons__submit" @click.prevent="handleGuess">GUESS</button>
                 <button class="control-buttons__finish" @click.prevent="handleFinish">FINISH</button>
-                <button class="control-buttons__pokedex" @click.prevent="showModal = true">POKEDEX</button>
+                <button class="control-buttons__pokedex" @click.prevent="showModal = true">YOUR PROGRESS</button>
             </div>
         </div>
     </div>

@@ -4,22 +4,27 @@
             <p class="summary__title">Pokemon guessing game</p>
             <p class="summary__info">Guess the pokemon and add it into your Pokedex</p>
             <p v-if="!isUserLoggedIn" class="summary__account">User must have an
-                <NuxtLink class="summary__account-register" to="auth/register">account</NuxtLink>
+                <NuxtLink class="summary__account-register" :to="RouteNames.Register">account</NuxtLink>
                 to play
             </p>
         </div>
         <div class="hero-container">
             <img src="../../assets/images/pokemon-guess-hero.webp" alt="Pokemon guessing game hero image" />
             <div class="middle">
-                <NuxtLink v-if="isUserLoggedIn" class="middle-button" to="user/guessing_game"> PLAY </NuxtLink>
-                <NuxtLink v-if="!isUserLoggedIn" class="middle-button" to="auth/login">LOGIN TO PLAY</NuxtLink>
+                <NuxtLink v-if="isUserLoggedIn" class="middle-button" :to="RouteNames.GuessingGame">
+                    PLAY
+                </NuxtLink>
+                <NuxtLink v-if="!isUserLoggedIn" class="middle-button" :to="RouteNames.Login">
+                    LOGIN TO PLAY
+                </NuxtLink>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import { store } from '../../store/index'
+import { store } from "../../store/index";
+import { RouteNames } from "../routeNames";
 
 export default {
     data() {
@@ -27,6 +32,11 @@ export default {
             isUserLoggedIn: store.state.isUserActive
         }
     },
+    computed: {
+        RouteNames() {
+            return RouteNames;
+        }
+    }
 }
 </script>
 
@@ -88,7 +98,7 @@ img {
         margin: 20px 10px;
     }
 
-    .middle > a {
+    .middle>a {
         font-size: 15px;
     }
 }
@@ -133,6 +143,7 @@ img {
     .summary {
         margin: 5px;
     }
+
     .summary>p {
         font-size: 15px;
     }
