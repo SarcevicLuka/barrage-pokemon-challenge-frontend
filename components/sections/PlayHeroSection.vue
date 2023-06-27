@@ -23,7 +23,7 @@
     import { store } from "../../store/index";
     import { RouteNames } from "../routeNames";
 
-    const isUserLoggedIn =ref(store.state.isUserActive);
+    const isUserLoggedIn = computed(() => store.state.isUserActive);
 </script>
 
 <style lang="scss" scoped>

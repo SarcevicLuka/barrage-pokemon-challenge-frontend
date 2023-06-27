@@ -14,7 +14,7 @@ export async function authHandler(
         onResponse({ response }) {
             if (response.status === 201 || response.status === 200){
                 const token = response.headers.get("authorization")!
-                commit('setIsUserActive', !!token)
+                commit('setIsUserActive', !!token);
                 sessionStorage.setItem('token', token);
 
                 navigateTo("/")
