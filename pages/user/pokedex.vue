@@ -5,10 +5,12 @@
 </template>
 
 <script lang="ts" setup>
-import { defineComponent } from 'vue'
+//import { defineComponent } from 'vue'
+
+definePageMeta({
+    middleware: ["auth"]
+});
 
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
