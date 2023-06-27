@@ -31,21 +31,11 @@
     </nav>
 </template>
 
-<script>
+<script setup>
 import { store } from "../../store/index";
 import { RouteNames } from "../routeNames";
-
-export default {
-    data() {
-        return {
-            isUserLoggedIn: store.state.isUserActive
-        }
-    }
-}
-</script>
-
-<script setup>
 import { ref } from "vue";
+const isUserLoggedIn =ref(store.state.isUserActive);
 
 const isNavFullScreen = ref(false);
 </script>

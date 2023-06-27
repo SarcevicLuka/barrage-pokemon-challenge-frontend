@@ -22,22 +22,11 @@
     </div>
 </template>
 
-<script>
+<script lang="ts" setup>
 import { store } from "../../store/index";
 import { RouteNames } from "../routeNames";
 
-export default {
-    data() {
-        return {
-            isUserLoggedIn: store.state.isUserActive
-        }
-    },
-    computed: {
-        RouteNames() {
-            return RouteNames;
-        }
-    }
-}
+const isUserLoggedIn =ref(store.state.isUserActive);
 </script>
 
 <style lang="scss" scoped>
