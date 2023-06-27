@@ -3,15 +3,12 @@
 </template>
 
 <script>
-import RegisterForm from '@/components/forms/RegisterForm.vue'
+    import RegisterForm from '@/components/forms/RegisterForm.vue'
 
-export default {
-    components: {
-        RegisterForm
+    export default {
+        components: {
+            RegisterForm
+        }
     }
-}
 
 </script>
-
-<style lang="scss" scoped>
-</style>

@@ -32,137 +32,137 @@
 </template>
 
 <script setup>
-import { store } from "../../store/index";
-import { RouteNames } from "../routeNames";
-import { ref } from "vue";
-const isUserLoggedIn =ref(store.state.isUserActive);
+    import { store } from "../../store/index";
+    import { RouteNames } from "../routeNames";
+    import { ref } from "vue";
+    const isUserLoggedIn =ref(store.state.isUserActive);
 
-const isNavFullScreen = ref(false);
+    const isNavFullScreen = ref(false);
 </script>
 
 <style lang="scss" scoped>
-.navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px;
-    background-color: $primary-color;
-
-    &__inner-links {
-        display: flex;
-        justify-content: flex-end;
-        width: 80%;
-    }
-
-    &__inner-logo .logo {
-        width: 150px;
-    }
-}
-
-.nav-list {
-    list-style-type: none;
-    display: flex;
-}
-
-.auth-link-login {
-    cursor: pointer;
-    text-decoration: none;
-    color: black;
-    font-size: 20px;
-    margin-right: 30px;
-
-    &:hover {
-        color: $link-hover-color;
-        border-bottom: 2px solid $link-hover-color;
-        transition: 0.15s;
-    }
-}
-
-.auth-link-register,
-.nav-list-pokedex {
-    cursor: pointer;
-    text-decoration: none;
-    color: $primary-color;
-    background-color: $link-hover-color;
-    border: 2px solid $link-hover-color;
-    border-radius: 15px;
-    padding: 8px;
-    font-size: 20px;
-    margin-right: 30px;
-
-    &:hover {
-        color: $link-hover-color;
-        background-color: $primary-color;
-        border-color: $link-hover-color;
-        transition: 0.2s;
-    }
-}
-
-.fa-bars {
-    color: black;
-    transform: scale(2);
-}
-
-.navbar .navbar__inner-links.active {
-    top: 0;
-}
-
-.fa-times {
-    top: 30px;
-    right: 30px;
-    position: absolute;
-    color: black;
-    transform: scale(2);
-    display: block;
-}
-
-@media (max-width: 821px) {
     .navbar {
-        justify-content: space-between;
-        padding: 2em;
-    }
-
-    .navbar .navbar__inner-links {
         display: flex;
-        flex-direction: column;
         align-items: center;
-        justify-content: center;
-        position: fixed;
-        z-index: 5;
-        right: 0;
-        top: -100%;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
+        justify-content: space-between;
+        padding: 10px;
         background-color: $primary-color;
-        transition: all 0.6s;
+    
+        &__inner-links {
+            display: flex;
+            justify-content: flex-end;
+            width: 80%;
+        }
+    
+        &__inner-logo .logo {
+            width: 150px;
+        }
     }
-
+    
     .nav-list {
-        width: 100%;
         list-style-type: none;
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-
-        & li {
-            margin-top: 50px;
-        }
-
-        & a {
-            font-size: 40px;
+    }
+    
+    .auth-link-login {
+        cursor: pointer;
+        text-decoration: none;
+        color: black;
+        font-size: 20px;
+        margin-right: 30px;
+    
+        &:hover {
+            color: $link-hover-color;
+            border-bottom: 2px solid $link-hover-color;
+            transition: 0.15s;
         }
     }
-}
-
-@media (min-width: 821px) {
+    
+    .auth-link-register,
+    .nav-list-pokedex {
+        cursor: pointer;
+        text-decoration: none;
+        color: $primary-color;
+        background-color: $link-hover-color;
+        border: 2px solid $link-hover-color;
+        border-radius: 15px;
+        padding: 8px;
+        font-size: 20px;
+        margin-right: 30px;
+    
+        &:hover {
+            color: $link-hover-color;
+            background-color: $primary-color;
+            border-color: $link-hover-color;
+            transition: 0.2s;
+        }
+    }
+    
     .fa-bars {
-        display: none;
+        color: black;
+        transform: scale(2);
     }
-
+    
+    .navbar .navbar__inner-links.active {
+        top: 0;
+    }
+    
     .fa-times {
-        display: none;
+        top: 30px;
+        right: 30px;
+        position: absolute;
+        color: black;
+        transform: scale(2);
+        display: block;
     }
-}
+    
+    @media (max-width: 821px) {
+        .navbar {
+            justify-content: space-between;
+            padding: 2em;
+        }
+    
+        .navbar .navbar__inner-links {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            z-index: 5;
+            right: 0;
+            top: -100%;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: $primary-color;
+            transition: all 0.6s;
+        }
+    
+        .nav-list {
+            width: 100%;
+            list-style-type: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        
+            & li {
+                margin-top: 50px;
+            }
+        
+            & a {
+                font-size: 40px;
+            }
+        }
+    }
+    
+    @media (min-width: 821px) {
+        .fa-bars {
+            display: none;
+        }
+    
+        .fa-times {
+            display: none;
+        }
+    }
 </style>

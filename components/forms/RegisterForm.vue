@@ -20,7 +20,7 @@
 
 <script lang="ts" setup>
     import { RegisterUserData } from '~/store/types';
-    import { store } from '../../store/index'
+    import { store } from '../../store/index';
     
     const error = ref("")
     const userData = reactive<RegisterUserData>({
@@ -29,7 +29,7 @@
         lastName: "",
         password: ""
     })
-    const pending = store.state.pending
+    const pending = store.state.pending;
     
     async function handleRegister(): Promise<void> {
         await store.dispatch(
@@ -40,13 +40,13 @@
             }
         )
         .then((err) => {
-            console.log(err)
-            error.value = err
+            console.log(err);
+            error.value = err;
         })
     }
 
 </script>
 
 <style lang="scss" scoped>
-@import "../../assets/styles/authForm.scss"
+    @import "../../assets/styles/authForm.scss"
 </style>

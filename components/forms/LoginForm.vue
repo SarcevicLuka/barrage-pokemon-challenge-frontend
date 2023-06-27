@@ -18,14 +18,14 @@
 
 <script lang="ts" setup>
     import { LoginUserData } from '~/store/types';
-    import { store } from '../../store/index'
+    import { store } from '../../store/index';
     
     const error = ref("")
     const userData = reactive<LoginUserData>({
         email: "",
         password: ""
     })
-    const pending = store.state.pending
+    const pending = store.state.pending;
     
     async function handleLogin(): Promise<void> {
         await store.dispatch(
@@ -36,8 +36,8 @@
             }
         )
         .then((err) => {
-            console.log(err)
-            error.value = err
+            console.log(err);
+            error.value = err;
         })
     }
 </script>
