@@ -4,17 +4,12 @@
     </div>
 </template>
 
-<script>
-import PlayHeroSection from '@/components/sections/PlayHeroSection.vue';
-export default {
-    components: {
-        PlayHeroSection
-    }
-}
+<script setup>
+    import PlayHeroSection from '@/components/sections/PlayHeroSection.vue';
 </script>
 
 <style lang="scss" scoped>
-div {
-    max-height: 20%;
-}
+    div {
+        max-height: 20%;
+    }
 </style>
