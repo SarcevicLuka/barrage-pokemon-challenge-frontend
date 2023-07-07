@@ -17,19 +17,19 @@
 </template>
 
 <script lang="ts" setup>
+    import { useAuthStore } from '~/store/authStore'; 
     import { LoginUserData } from '~/store/types';
-    import { store } from '../../store/index';
     
-    const error = ref("")
+    const authStore = useAuthStore();
+    const error = ref("");
     const userData = reactive<LoginUserData>({
         email: "",
         password: ""
-    })
-    const pending = store.state.pending;
+    });
+    const pending = ref(false);
     
     async function handleLogin(): Promise<void> {
-        await store.dispatch(
-            'authHandler',
+        await authStore.authHandler(
             {
                 path: "auth/login",
                 userData

@@ -37,18 +37,18 @@
 </template>
 
 <script lang="ts" setup>
-    import { store } from "../../store/index";
+    import { useAuthStore } from "~/store/authStore";
     import { RouteNames } from "../routeNames";
     import { ref } from "vue";
 
-    const isUserLoggedIn = computed(() => store.state.isUserActive);
+    const store = useAuthStore();
+
+    const isUserLoggedIn = computed(() => store.getIsUserActive);
     
     const isNavFullScreen = ref(false);
 
     function handleLogout() {
-        store.commit("setIsUserActive", false);
-        sessionStorage.removeItem("token");
-        navigateTo(RouteNames.Home);
+        store.logout();
     }
 </script>
 

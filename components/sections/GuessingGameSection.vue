@@ -50,9 +50,11 @@
 </template>
 
 <script lang="ts" setup>
-    import { store } from '~/store';
+    import { usePokemonStore } from '~/store/pokemonStore';
     import { GuessingGamePokemon } from '~/store/types';
     import GameProgressBar from '../GameProgressBar.vue';
+
+    const store = usePokemonStore();
 
     const userGuess = ref("")
     const pokemon = reactive<GuessingGamePokemon>({
@@ -74,22 +76,22 @@
     async function handleSkip(): Promise<void> {
         verdict.value = "";
 
-        await store.dispatch('getRandomPokemon')
+        await store.getRandomPokemon()
             .then(({ error, payload }) => {
                 errors.value = error;
-                pokemon.image = payload.image;
-                pokemon.guessId = payload.guessId;
+                pokemon.image = (payload as GuessingGamePokemon).image;
+                pokemon.guessId = (payload as GuessingGamePokemon).guessId;
             });
     }
 
     async function handleGuess(): Promise<void> {
-        await store.dispatch('takeAGuess', {
+        await store.takeAGuess({
             userGuess: userGuess.value,
             guessId: pokemon.guessId
         })
         .then(({ error, payload }) => {
             errors.value = error;
-            verdict.value = payload;
+            verdict.value = (payload as string);
             console.log(verdict.value);
         });
 

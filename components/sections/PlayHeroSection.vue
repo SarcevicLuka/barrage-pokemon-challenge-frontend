@@ -20,10 +20,12 @@
 </template>
 
 <script lang="ts" setup>
-    import { store } from "../../store/index";
+    import { useAuthStore } from "~/store/authStore";
     import { RouteNames } from "../routeNames";
 
-    const isUserLoggedIn = computed(() => store.state.isUserActive);
+    const store = useAuthStore();
+
+    const isUserLoggedIn = computed(() => store.getIsUserActive);
 </script>
 
 <style lang="scss" scoped>
