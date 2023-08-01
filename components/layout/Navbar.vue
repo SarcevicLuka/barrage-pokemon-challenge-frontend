@@ -23,12 +23,12 @@
                 </li>
                 <li v-if="!isUserLoggedIn">
                     <NuxtLink class="auth-link-log" :to="RouteNames.Login">
-                        LOGIN
+                        Login
                     </NuxtLink>
                 </li>
                 <li v-if="!isUserLoggedIn">
                     <NuxtLink class="auth-link-register" :to="RouteNames.Register">
-                        REGISTER
+                        Register
                     </NuxtLink>
                 </li>
             </ul>
@@ -57,7 +57,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 10px;
+        padding: 30px 50px;
         background-color: $primary-color;
 
         &__inner-links {
@@ -79,13 +79,13 @@
     .auth-link-log {
         cursor: pointer;
         text-decoration: none;
-        color: black;
+        color: rgba(228, 19, 19, 0.870);
         font-size: 20px;
+        font-weight: 500;
         margin-right: 30px;
 
         &:hover {
-            color: $link-hover-color;
-            border-bottom: 2px solid $link-hover-color;
+            border-bottom: 2px solid rgba(228, 19, 19, 0.870);
             transition: 0.15s;
         }
     }
@@ -94,20 +94,12 @@
     .nav-list-pokedex {
         cursor: pointer;
         text-decoration: none;
-        color: $primary-color;
-        background-color: $link-hover-color;
-        border: 2px solid $link-hover-color;
-        border-radius: 15px;
-        padding: 8px;
+        color: rgba(250, 250, 250, 0.832);
+        background: linear-gradient(45deg, rgba(228, 19, 19, 0.870), rgba(183, 0, 0, 0.589));
+        border-radius: 4px;
+        padding: 12px 25px;
         font-size: 20px;
         margin-right: 30px;
-
-        &:hover {
-            color: $link-hover-color;
-            background-color: $primary-color;
-            border-color: $link-hover-color;
-            transition: 0.2s;
-        }
     }
 
     .nav-list-log {
@@ -125,19 +117,20 @@
     }
 
     .fa-bars {
-        color: black;
+        color: rgba(228, 19, 19, 0.870);
         transform: scale(2);
     }
 
     .navbar .navbar__inner-links.active {
         top: 0;
+        background-color: linear-gradient(315deg, rgba(0, 0, 197, 0.671), rgba(183, 0, 0, 0.696));
     }
 
     .fa-times {
-        top: 30px;
+        top: 50px;
         right: 30px;
         position: absolute;
-        color: black;
+        color: rgba(228, 19, 19, 0.870);
         transform: scale(2);
         display: block;
     }
@@ -149,6 +142,7 @@
         }
 
         .navbar .navbar__inner-links {
+            background: linear-gradient(315deg, rgba(0, 0, 197, 1), rgba(183, 0, 0, 1));            
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -160,7 +154,6 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background-color: $primary-color;
             transition: all 0.6s;
         }
 

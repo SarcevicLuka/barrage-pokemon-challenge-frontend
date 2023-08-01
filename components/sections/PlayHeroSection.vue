@@ -1,20 +1,14 @@
 <template>
     <div class="home">
         <div class="summary">
-            <p class="summary__title">Pokemon guessing game rules:</p>
-            <p class="summary__info">Guess the pokemon and add it into your Pokedex</p>
-            <p v-if="!isUserLoggedIn" class="summary__account">User must have an account and be logged in to play </p>
+            <div class="summary__title"> Pokemon guessing game </div>
+            <div class="summary__info"> Guess the pokemon and add it into your Pokedex </div>
+            <NuxtLink class="start-game" :to="RouteNames.GuessingGame">
+                PLAY NOW
+            </NuxtLink>
         </div>
         <div class="hero-container">
-            <img src="../../assets/images/pokemon-guess-hero.webp" alt="Pokemon guessing game hero image" />
-            <div class="middle">
-                <NuxtLink v-if="isUserLoggedIn" class="middle-button" :to="RouteNames.GuessingGame">
-                    PLAY
-                </NuxtLink>
-                <div v-if="!isUserLoggedIn" class="middle-button">
-                    LOGIN TO PLAY
-                </div>
-            </div>
+            <img src="../../assets/images/ash.png" alt="Pokemon guessing game hero image" />
         </div>
     </div>
 </template>
@@ -31,93 +25,62 @@
 <style lang="scss" scoped>
     .home {
         display: flex;
-        flex-direction: column;
+        height: 85vh;
+        overflow: hidden;
     }
     
     .hero-container {
-        position: relative;
-        height: 100%;
-        margin: 20px;
-        border-radius: 30px;
-        box-shadow: 0 8px 8px 0 $shadow-color, 0 10px 20px 0 $shadow-color;
+        height: max-content;
+        display: flex;
+        justify-content: flex-end;
+        margin-right: 100px;
     }
     
     img {
-        opacity: 1;
-        display: block;
-        width: 100%;
+        max-width: 90%;
         height: auto;
-        transition: .5s ease;
-        border-radius: 30px;
-    }
-    
-    .hero-container:hover img {
-        opacity: 0.6;
-    }
-    
-    .hero-container:hover .middle-button {
-        opacity: 1;
-    }
-    
-    .middle-button {
-        text-align: center;
-        text-decoration: none;
-        color: black;
-        font-size: 25px;
-        transition: .5s ease;
-        opacity: 0;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        padding: 20px 35px;
-        background-color: $primary-color;
-        border-radius: 20px;
-    
-        &:hover {
-            background-color: $secondary-color;
-            transition: .5s;
-        }
-    }
-    
-    @media (max-width: 821px) {
-        .hero-container {
-            margin: 20px 10px;
-        }
-    
-        .middle>a {
-            font-size: 15px;
-        }
     }
     
     .summary {
-        text-align: center;
-        margin: 20px;
-        border-radius: 30px;
-        box-shadow: $shadow-color 0px 8px 24px;
-    
-        &__title {
-            font-size: 30px;
-        }
-    
-        &__info {
-            font-size: 25px;
-        }
-    
-        &__account {
-            color: $important;
-            font-size: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        text-align: start;
+        color: rgba(250, 250, 250, 0.832);
+        margin-left: 100px;
+        margin-top: 80px;
+        font-size: 45px;
+
+        & > div {
+            margin-top: 30px;
         }
     }
-    
-    @media (max-width: 821px) {
-        .summary {
-            margin: 5px;
+
+    .start-game {
+        cursor: pointer;
+        text-decoration: none;
+        width: max-content;
+        margin-top: 50px;
+        color: rgba(250, 250, 250, 0.832);
+        background: linear-gradient(45deg, rgba(228, 19, 19, 0.870), rgba(183, 0, 0, 0.589));
+        border-radius: 4px;
+        padding: 18px 30px;
+        font-size: 20px;
+        transition: transform .2s;
+
+        &:hover {
+            transform: scale(1.1);
         }
-    
-        .summary>p {
-            font-size: 15px;
+    }
+
+    @media (max-width: 821px) {
+        img {
+            display: none;
+        }
+
+        .summary {
+            margin-top: 40px;
+            margin-left: 40px;
         }
     }
 </style>
