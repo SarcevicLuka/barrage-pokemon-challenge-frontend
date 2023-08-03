@@ -8,7 +8,7 @@
             </NuxtLink>
         </div>
         <div class="hero-container">
-            <img src="../../assets/images/ash.png" alt="Pokemon guessing game hero image" />
+            <img src="../../assets/images/gengar.png" alt="Pokemon guessing game hero image" />
         </div>
     </div>
 </template>
@@ -19,34 +19,37 @@
 
     const store = useAuthStore();
 
-    const isUserLoggedIn = computed(() => store.getIsUserActive);
+    //const isUserLoggedIn = computed(() => store.getIsUserActive);
+    const isUserLoggedIn = true;
 </script>
 
 <style lang="scss" scoped>
     .home {
         display: flex;
-        height: 85vh;
-        overflow: hidden;
+        justify-content: center;
+        align-items: center;
     }
     
     .hero-container {
-        height: max-content;
         display: flex;
-        justify-content: flex-end;
-        margin-right: 100px;
+        align-items: center;
+        justify-content: center;
+        margin-top: 50px;
+        margin-right: 50px;
     }
     
     img {
-        max-width: 90%;
+        max-width: 70%;
         height: auto;
     }
     
     .summary {
+        min-width: 40%;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         text-align: start;
-        color: rgba(250, 250, 250, 0.832);
+        color: $text-color;
         margin-left: 100px;
         margin-top: 80px;
         font-size: 45px;
@@ -61,8 +64,8 @@
         text-decoration: none;
         width: max-content;
         margin-top: 50px;
-        color: rgba(250, 250, 250, 0.832);
-        background: linear-gradient(45deg, rgba(228, 19, 19, 0.870), rgba(183, 0, 0, 0.589));
+        color: $text-color;
+        background: $main-button-color;
         border-radius: 4px;
         padding: 18px 30px;
         font-size: 20px;

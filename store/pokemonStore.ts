@@ -25,13 +25,13 @@ export const usePokemonStore = defineStore('pokemonStore', () => {
                     gamePokemon = response._data
                 }
             },
-            onResponseError({ response }) {
-                if (response.status === 401) {
-                    navigateTo("/auth/login")
-                }
-                else 
-                    error = response._data.cause
-            }
+            // onResponseError({ response }) {
+            //     if (response.status === 401) {
+            //         navigateTo("/auth/login")
+            //     }
+            //     else 
+            //         error = response._data.cause
+            // }
         })
     
         return {

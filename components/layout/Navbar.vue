@@ -11,11 +11,11 @@
         <div class="navbar__inner-links" :class="{ active: isNavFullScreen }">
             <i class="fas fa-times" @click="isNavFullScreen = !isNavFullScreen"></i>
             <ul class="nav-list" @click="isNavFullScreen = !isNavFullScreen">
-                <li v-if="isUserLoggedIn">
+                <!-- <li v-if="isUserLoggedIn">
                     <NuxtLink class="nav-list-log" @click="handleLogout">
                         LOG OUT
                     </NuxtLink>
-                </li>
+                </li> -->
                 <li v-if="isUserLoggedIn">
                     <NuxtLink class="nav-list-pokedex" :to="RouteNames.Pokedex">
                         POKEDEX
@@ -43,7 +43,8 @@
 
     const store = useAuthStore();
 
-    const isUserLoggedIn = computed(() => store.getIsUserActive);
+    //const isUserLoggedIn = computed(() => store.getIsUserActive);
+    const isUserLoggedIn = true;
     
     const isNavFullScreen = ref(false);
 
@@ -79,13 +80,13 @@
     .auth-link-log {
         cursor: pointer;
         text-decoration: none;
-        color: rgba(228, 19, 19, 0.870);
+        color: $secondary-button-color;
         font-size: 20px;
         font-weight: 500;
         margin-right: 30px;
 
         &:hover {
-            border-bottom: 2px solid rgba(228, 19, 19, 0.870);
+            border-bottom: 2px solid $secondary-button-color;
             transition: 0.15s;
         }
     }
@@ -94,8 +95,8 @@
     .nav-list-pokedex {
         cursor: pointer;
         text-decoration: none;
-        color: rgba(250, 250, 250, 0.832);
-        background: linear-gradient(45deg, rgba(228, 19, 19, 0.870), rgba(183, 0, 0, 0.589));
+        color: $text-color;
+        background: $main-button-color;
         border-radius: 4px;
         padding: 12px 25px;
         font-size: 20px;
@@ -117,20 +118,20 @@
     }
 
     .fa-bars {
-        color: rgba(228, 19, 19, 0.870);
+        color: $secondary-button-color;
         transform: scale(2);
     }
 
     .navbar .navbar__inner-links.active {
         top: 0;
-        background-color: linear-gradient(315deg, rgba(0, 0, 197, 0.671), rgba(183, 0, 0, 0.696));
+        background-color: $background-color;
     }
 
     .fa-times {
         top: 50px;
         right: 30px;
         position: absolute;
-        color: rgba(228, 19, 19, 0.870);
+        color: $secondary-button-color;
         transform: scale(2);
         display: block;
     }
