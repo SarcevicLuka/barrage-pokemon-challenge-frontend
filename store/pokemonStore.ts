@@ -1,10 +1,12 @@
 import { defineStore } from "pinia";
-import { GuessHandlerProps, GuessingGamePokemon, ResponseWithPayload } from "./types";
+import { GuessHandlerProps, GuessingGamePokemon, Pokemon, ResponseWithPayload } from "./types";
 
 export const usePokemonStore = defineStore('pokemonStore', () => {
-    const newlyGuessedPokemon = ref([]);
+    const newlyGuessedPokemon = reactive<{ myArray: Pokemon[] }>({
+        myArray: []
+    });
 
-    const getNewlyGuessedPokemon = computed(() => newlyGuessedPokemon.value);
+    const getNewlyGuessedPokemon = computed(() => newlyGuessedPokemon.myArray);
 
     async function getRandomPokemon(): Promise<ResponseWithPayload> {
         let error = ""
@@ -91,9 +93,15 @@ export const usePokemonStore = defineStore('pokemonStore', () => {
             },
             onResponse({ response }) {
                 if (response.status === 200){
-                    console.log(response._data.data)
-                    newlyGuessedPokemon.value = response._data.data;
-                }
+                    newlyGuessedPokemon.myArray = [];
+                    const newArray = response._data.data;
+                    console.log(newArray);
+                    newArray.map((pokemon: Pokemon, index: number) => {
+                        newlyGuessedPokemon.myArray.push(pokemon);
+                    })
+
+                    console.log(newlyGuessedPokemon.myArray)
+                }  
             },
             onResponseError({ response }) {
                 if (response.status === 401) {

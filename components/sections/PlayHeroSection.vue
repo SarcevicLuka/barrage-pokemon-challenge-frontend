@@ -52,10 +52,14 @@
         color: $text-color;
         margin-left: 100px;
         margin-top: 80px;
-        font-size: 45px;
 
-        & > div {
-            margin-top: 30px;
+        &__title {
+            font-size: 60px;
+        }
+
+        &__info {
+            margin-top: 70px;
+            font-size: 35px;
         }
     }
 

@@ -29,3 +29,17 @@ export type ResponseWithPayload = {
     error: string,
     payload: GuessingGamePokemon | string
 }
+
+export type Pokemon = {
+    apiPokemonId: number,
+    baseExperience: number,
+    createdAt: string,
+    height: number,
+    id: string,
+    image: string,
+    isDefault: boolean,
+    name: string,
+    position: number,
+    updatedAt: string,
+    weight: number
+}
