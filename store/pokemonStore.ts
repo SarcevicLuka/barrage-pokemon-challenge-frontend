@@ -14,15 +14,15 @@ export const usePokemonStore = defineStore('pokemonStore', () => {
             image: "",
             guessId: ""
         }
-    
+
         const { pending } = await useFetch('guessing-game/guess', {
             baseURL: "http://localhost:8080/",
             method: "GET",
-            headers: { 
+            headers: {
                 "Authorization": "Bearer " + sessionStorage.getItem('token')
             },
             onResponse({ response }) {
-                if (response.status === 200){
+                if (response.status === 200) {
                     console.log(response._data)
                     gamePokemon = response._data
                 }
@@ -35,9 +35,9 @@ export const usePokemonStore = defineStore('pokemonStore', () => {
             //         error = response._data.cause
             // }
         })
-    
+
         return {
-            error: error, 
+            error: error,
             payload: gamePokemon
         }
     };
@@ -47,7 +47,7 @@ export const usePokemonStore = defineStore('pokemonStore', () => {
     ): Promise<ResponseWithPayload> {
         let error = ""
         let guessVerdict = ""
-    
+
         const { pending } = await useFetch(`guessing-game/guess/${payload.guessId}`, {
             baseURL: "http://localhost:8080/",
             method: "POST",
@@ -59,7 +59,7 @@ export const usePokemonStore = defineStore('pokemonStore', () => {
                 guessName: payload.userGuess
             }),
             onResponse({ response }) {
-                if (response.status === 200){
+                if (response.status === 200) {
                     guessVerdict = response._data.verdict
                 }
             },
@@ -74,16 +74,16 @@ export const usePokemonStore = defineStore('pokemonStore', () => {
                 }
             }
         })
-            
+
         return {
-            error: error, 
+            error: error,
             payload: guessVerdict
         }
     };
 
     async function getGuessedPokemon() {
         let error = ""
-    
+
         const { pending } = await useFetch("user/pokedex", {
             baseURL: "http://localhost:8080/",
             method: "GET",
@@ -92,16 +92,14 @@ export const usePokemonStore = defineStore('pokemonStore', () => {
                 "Authorization": "Bearer " + sessionStorage.getItem('token')
             },
             onResponse({ response }) {
-                if (response.status === 200){
+                if (response.status === 200) {
                     newlyGuessedPokemon.myArray = [];
                     const newArray = response._data.data;
                     console.log(newArray);
                     newArray.map((pokemon: Pokemon, index: number) => {
                         newlyGuessedPokemon.myArray.push(pokemon);
                     })
-
-                    console.log(newlyGuessedPokemon.myArray)
-                }  
+                }
             },
             onResponseError({ response }) {
                 if (response.status === 401) {
@@ -114,8 +112,8 @@ export const usePokemonStore = defineStore('pokemonStore', () => {
                 }
             }
         })
-    
-        return {error}
+
+        return { error }
     };
 
     return { getNewlyGuessedPokemon, getRandomPokemon, takeAGuess, getGuessedPokemon }

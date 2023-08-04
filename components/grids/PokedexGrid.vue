@@ -1,6 +1,6 @@
 <template>
     <div class="grid-container">
-        <div class="title">You have {{usersPokemon.length}} pokemon</div>
+        <div class="title">You caught {{usersPokemon.length}} pokemon</div>
         <div class="pokedex-grid">
             <div v-for="pokemon in usersPokemon">
                 <PokemonCard :pokemon="pokemon" />
@@ -59,13 +59,13 @@
             }
         }
         @media only screen and (min-width: 800px) {
-            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr;
         }
         @media only screen and (min-width: 1100px) {
-            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
         }
         @media only screen and (min-width: 1400px) {
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
         }
     }
 </style>
