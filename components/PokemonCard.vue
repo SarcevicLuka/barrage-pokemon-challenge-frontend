@@ -1,7 +1,15 @@
 <template>
     <div class="card-container">
-        <img :src="pokemon.image" :alt="pokemon.name">
-        <div>{{pokemon.name}}</div>
+        <div class="pokemon">
+            <img 
+                class="pokemon__image"
+                :src="pokemon.image" 
+                :alt="pokemon.name"
+            >
+            <div class="pokemon__name">
+                {{pokemon.name}}
+            </div>
+        </div>
     </div>
 </template>
 
@@ -24,14 +32,24 @@
         box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         backdrop-filter: blur(0.6px);
         border: 1px solid rgba(255, 255, 255, 0.14);
+    }
 
+    .pokemon {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+
+        &__image {
+            max-width: 60%;
+        }
+
+        &__name {
+            font-size: 20px;
+        }
     }
 
-    img {
-        max-width: 40%;
+    .stats {
+        display: none;
     }
 </style>

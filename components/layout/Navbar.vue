@@ -83,7 +83,7 @@
         color: $secondary-button-color;
         font-size: 20px;
         font-weight: 500;
-        margin-right: 30px;
+        //margin-right: 30px;
 
         &:hover {
             border-bottom: 2px solid $secondary-button-color;
@@ -100,7 +100,7 @@
         border-radius: 4px;
         padding: 12px 25px;
         font-size: 20px;
-        margin-right: 30px;
+        //margin-right: 30px;
     }
 
     .nav-list-log {
@@ -154,7 +154,6 @@
             top: -100%;
             width: 100%;
             height: 100%;
-            overflow: hidden;
             transition: all 0.6s;
         }
 

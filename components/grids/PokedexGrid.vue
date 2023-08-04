@@ -1,8 +1,8 @@
 <template>
     <div class="grid-container">
-        <div class="title">You have {{store.getNewlyGuessedPokemon.length}} pokemon</div>
+        <div class="title">You have {{usersPokemon.length}} pokemon</div>
         <div class="pokedex-grid">
-            <div v-for="pokemon in store.getNewlyGuessedPokemon">
+            <div v-for="pokemon in usersPokemon">
                 <PokemonCard :pokemon="pokemon" />
             </div>
         </div>
@@ -14,6 +14,8 @@
     import PokemonCard from '~/components/PokemonCard.vue';
 
     const store = usePokemonStore();
+
+    let usersPokemon = store.getNewlyGuessedPokemon;
 
     onMounted(() => {
         getPokemon();
@@ -35,37 +37,35 @@
         color: $text-color;
         margin: 10px auto;
         font-size: 40px;
+
+        @media only screen and (max-width: 600px) {
+            font-size: 30px;
+        }
     }
 
     .pokedex-grid {
         margin: 30px 50px;
         display: grid;
         grid-gap: 20px;
-        max-height: 140px;
-        overflow: auto;
 
         @media only screen and (min-width: 350px) {
             grid-template-columns: 1fr;
             grid-gap: 30px;
-            max-height: 1000px;
         }
-        @media only screen and (max-width: 550px) {
+        @media only screen and (min-width: 600px) {
             grid-template-columns: 1fr 1fr;
-            max-height: 800px;
-        }
-        @media only screen and (min-width: 800px) {
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-            max-height: 800px;
-        }
-        &__inner-correct {
-            border: 2px solid black;
-            border-radius: 10px;
-            .pokemon-image {
-                display: block;
-                margin: 0 auto;
-                max-width: 150px;
+            .title {
+                font-size: 30px;
             }
         }
-
+        @media only screen and (min-width: 800px) {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+        @media only screen and (min-width: 1100px) {
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+        }
+        @media only screen and (min-width: 1400px) {
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        }
     }
 </style>
